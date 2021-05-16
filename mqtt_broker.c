@@ -1,6 +1,7 @@
 #define _GNU_SOURCE
 #include "mqtt_broker.h"
 
+#include <arpa/inet.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -15,30 +16,31 @@ int main(int argc, char **argv) {
 
     int listenfd = TCP_init_socket();
     if (listenfd == -1) {
-        exit_with_message("fail to initialize socket!");
+        exit_with_message("fail to initialize socket");
     }
 
     int bind_result = TCP_bind_socket_address(listenfd, argv[1]);
     if (bind_result == -1) {
-        exit_with_message("fail to bind port!");
+        exit_with_message("fail to bind port");
     }
 
     int listen_result = TCP_listen_connections(listenfd);
     if (listen_result == -1) {
-        exit_with_message("fail to listen to connections!");
+        exit_with_message("fail to listen to connections");
     }
 
     printf("broker running on port %s\n", argv[1]);
 
-    int connfd;
     for (;;) {
-        connfd = TCP_await_connection(listenfd);
-        if (connfd == -1) {
-            exit_with_message("fail to accept connection!");
+        int *connfd_p = malloc(sizeof(int));
+
+        *connfd_p = TCP_await_connection(listenfd);
+        if (*connfd_p == -1) {
+            exit_with_message("fail to accept connection");
         }
 
         pthread_t thread;
-        pthread_create(&thread, NULL, handle_connection, (void *)&connfd);
+        pthread_create(&thread, NULL, handle_connection, (void *)connfd_p);
     }
 
     printf("\nbroker terminating\n");
@@ -46,8 +48,8 @@ int main(int argc, char **argv) {
     exit(0);
 }
 
-void *handle_connection(void *connfd_pointer) {
-    int connfd = *((int *)connfd_pointer);
+void *handle_connection(void *connfd_p) {
+    int connfd = *((int *)connfd_p);
 
     printf("\nconnection %d open\n", connfd);
 
@@ -72,6 +74,7 @@ void *handle_connection(void *connfd_pointer) {
 
     close(connfd);
     printf("connection %d closed\n\n", connfd);
+    free(connfd_p);
     return NULL;
 }
 
@@ -102,6 +105,6 @@ void show_usage_and_exit(char *prog_name) {
 }
 
 void exit_with_message(char *message) {
-    fprintf(stderr, "%s\n", message);
-    exit(-1);  
+    perror(message);
+    exit(-1);
 }

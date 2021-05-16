@@ -1,7 +1,7 @@
 #ifndef TCP_HANDLER_H
 #define TCP_HANDLER_H
 
-#define LISTENQ 1
+#define LISTEN_QUEUE 40
 
 int TCP_init_socket();
 

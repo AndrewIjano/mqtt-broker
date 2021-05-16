@@ -8,14 +8,16 @@ int TCP_init_socket() { return socket(AF_INET, SOCK_STREAM, 0); }
 
 int TCP_bind_socket_address(int socketfd, char *port) {
     struct sockaddr_in servaddr;
-    bzero(&servaddr, sizeof(servaddr));
+    memset(&servaddr, 0, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
     servaddr.sin_port = htons(atoi(port));
     return bind(socketfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
 }
 
-int TCP_listen_connections(int listenfd) { return listen(listenfd, LISTENQ); }
+int TCP_listen_connections(int listenfd) {
+    return listen(listenfd, LISTEN_QUEUE);
+}
 
 int TCP_await_connection(int listenfd) {
     return accept(listenfd, (struct sockaddr *)NULL, NULL);

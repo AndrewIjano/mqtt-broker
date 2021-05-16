@@ -1,7 +1,7 @@
 .PHONY: clean
 
 CC = gcc
-CFLAGS = -Wall -pedantic -pthread
+CFLAGS = -Wall -pedantic -pthread -O2 -std=c99
 OBJS = \
 	mqtt_broker.o \
 	tcp_handler.o \

@@ -4,6 +4,7 @@
 #include <pthread.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <sys/types.h>
 
 #define MAX_SUBSCRIBERS 100
 
