@@ -1,3 +1,12 @@
+/*
+ * EP1 - Servidor MQTT
+ * MAC0352 - Redes de Computadores e Sistemas Distribuídos
+ * IME-USP (2021)
+ * 
+ * Andrew Ijano Lopes - NUSP 10297797
+ * 
+ */
+
 #ifndef MQTT_SUB_MANAGER_H
 #define MQTT_SUB_MANAGER_H
 
