@@ -83,10 +83,28 @@ ssize_t MQTT_handle_ping(uint8_t *response) {
     return response_size;
 }
 
-ssize_t MQTT_handle_unsubscribe(int connfd) {
+ssize_t get_unsubscribe_ack(uint16_t msg_id, uint8_t *response) {
+    ssize_t response_size = 6;
+    uint8_t remaining_length = response_size - HEADER_LENGTH;
+    uint8_t msg_id_1 = (msg_id >> 4) & 0x0F;
+    uint8_t msg_id_2 = msg_id & 0x0F;
+    uint8_t property_size = 0;
+    uint8_t reason_code = 0;  // success
+
+    uint8_t unsubscribe_ack_message[] = {UNSUBACK << 4, remaining_length,
+                                         msg_id_1,      msg_id_2,
+                                         property_size, reason_code};
+    memcpy(response, unsubscribe_ack_message, response_size);
+    return response_size;
+}
+
+ssize_t MQTT_handle_unsubscribe(uint8_t *response, int connfd,
+                                uint8_t *control_packet) {
     printf("UNSUBSCRIBE\n");
+    uint8_t *body = control_packet + HEADER_LENGTH;
+    uint16_t msg_id = get_unit16(body);
     SUBS_remove_subscription(connfd);
-    return 0;
+    return get_unsubscribe_ack(msg_id, response);
 }
 
 ssize_t MQTT_handle_disconnect(int connfd) {

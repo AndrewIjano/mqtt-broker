@@ -88,7 +88,7 @@ int handle_message(uint8_t *response, uint8_t message_type, int connfd,
         case SUBSCRIBE:
             return MQTT_handle_subscribe(response, connfd, packet);
         case UNSUBSCRIBE:
-            return MQTT_handle_unsubscribe(connfd);
+            return MQTT_handle_unsubscribe(response, connfd, packet);
         case PINGREQ:
             return MQTT_handle_ping(response);
         case DISCONNECT:

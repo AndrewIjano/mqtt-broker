@@ -13,7 +13,8 @@ ssize_t MQTT_handle_subscribe(uint8_t *response, int connfd,
 
 ssize_t MQTT_handle_ping(uint8_t *response);
 
-ssize_t MQTT_handle_unsubscribe(int connfd);
+ssize_t MQTT_handle_unsubscribe(uint8_t *response, int connfd,
+                                uint8_t *control_packet);
 
 ssize_t MQTT_handle_disconnect(int connfd);
 
