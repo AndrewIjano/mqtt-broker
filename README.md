@@ -10,7 +10,7 @@ A simplified MQTT 5.0 broker, made for the subject MAC0352 - Computer Network an
 
 ## Architecture
 
-The [MQTT 5.0 protocol](https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html) is huge. This project just implements a simplifies version of it. See the [presentation slides](docs/slides.pdf) (in Portuguese) for more information about project decisions. 
+The [MQTT 5.0 protocol](https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html) is huge. This project just implements a simplified version of it. See the [presentation slides](docs/slides.pdf) (in Portuguese) for more information about project decisions. 
 
 <br/>
 <p align="center">
