@@ -40,7 +40,7 @@ Run the executable `mqtt_broker` passing the port `<port>`:
 For example, to run the broker on port 1883, execute:
 
 ```
-    ./mqtt_broker <port>
+    ./mqtt_broker 1883
 ```
 
 You can use clients `mosquitto_sub` and `mosquitto_pub` from the Debian package [`mosquitto-clients`](https://packages.debian.org/bullseye/mosquitto-clients) to interact with the broker.
